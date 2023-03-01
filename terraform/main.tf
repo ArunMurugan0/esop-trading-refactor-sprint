@@ -47,4 +47,3 @@ resource "aws_instance" "esop_app_server" {
   key_name = data.aws_key_pair.tf.key_name
   security_groups = [ aws_security_group.allow_only_conn_to_server.name ]
 }
-
