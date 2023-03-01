@@ -30,13 +30,13 @@ jobs:
     
     - name: Terraform Plan
       id: plan
-      run: terraform plan -out="tf-plan-${{github.event.pull_request.head.sha}}"
+      run: terraform plan -out="tf-plan"
       
     - name: upload Plan to Github Artifactory
       uses: actions/upload-artifact@v3
       with:
         name: tf-plan-${{github.event.pull_request.head.sha}}
-        path: ./tf-plan-*
+        path: "tf-plan"
       
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
