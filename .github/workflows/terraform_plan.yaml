@@ -47,7 +47,9 @@ jobs:
         script: |
           const output = `
           ##### Terraform Plan
-          \`${process.env.PLAN}\`
+          \`\`\`
+          ${process.env.PLAN}
+          \`\`\`
           `
           
           github.rest.pulls.update({
