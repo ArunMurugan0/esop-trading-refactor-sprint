@@ -5,6 +5,8 @@ on:
 
 jobs:
   plan:
+    permissions:
+      pull-requests: write
     runs-on: ubuntu-latest
     defaults:
       run:
