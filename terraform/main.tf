@@ -1,4 +1,10 @@
 terraform {
+  backend "s3" {
+    bucket = "tf-learn-state"
+    key = "state"
+    region = "ap-south-1"
+  }
+
   required_providers {
     aws = {
       source = "hashicorp/aws"
@@ -16,7 +22,6 @@ provider "aws" {
 data "aws_key_pair" "tf" {
   key_name = "tf"
 }
-
 
 resource "aws_security_group" "allow_only_conn_to_server" {
   ingress {
