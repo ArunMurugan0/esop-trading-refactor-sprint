@@ -1,0 +1,41 @@
+name: Terraform Apply
+on: workflow_dispatch
+
+jobs:
+  plan:
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./terraform
+        
+    steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        aws-region: ${{ secrets.AWS_REGION }}
+        
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+    
+    - name: Terraform Init
+      run: terraform init
+      
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate
+    
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -no-color -out="tf-plan"
+      
+    - name: Terraform Apply
+      run: terraform apply tf-plan
+
+          
+      
