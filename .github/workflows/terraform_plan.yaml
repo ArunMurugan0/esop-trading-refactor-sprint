@@ -36,18 +36,18 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: tf-plan-${{github.event.pull_request.head.sha}}
-        path: ./tf-plan
+        path: terraform/tf-plan
       
     - uses: actions/github-script@v6
       if: github.event_name == 'pull_request'
       env:
-        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+        PLAN: "${{ steps.plan.outputs.stdout }}"
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const output = `
           ##### Terraform Plan
-          ${process.env.PLAN}
+          \`${process.env.PLAN}\`
           `
           
           github.rest.pulls.update({
